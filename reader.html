@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đọc truyện</title>
+  <link rel="stylesheet" href="reader.css">
+  <script type="module" src="reader.js"></script>
+</head>
+<body>
+  <form id="bar">
+    <span class="go">
+      <input id="url" type="text" inputmode="url" autocomplete="url" spellcheck="false"
+             placeholder="Dán link chương truyện" aria-label="Link chương truyện">
+      <button id="open">Mở</button>
+    </span>
+    <label><input id="adblock" type="checkbox"> Chặn quảng cáo</label>
+    <label>Tốc độ cuộn <input id="speed" type="range" min="2" max="40" step="1"></label>
+    <button type="button" id="pick" aria-pressed="false">Ẩn phần tử</button>
+    <button type="button" id="pip">Cửa sổ nổi</button>
+  </form>
+  <p id="note" role="status" hidden></p>
+
+  <main id="home">
+    <div id="stage">
+      <button type="button" id="rail" aria-pressed="false"
+              title="Bật rồi đưa chuột xuống dưới để cuộn xuống, lên trên để cuộn lên">
+        <span class="zone up"></span>
+        <span class="label">Tự cuộn</span>
+        <span class="zone down"></span>
+      </button>
+      <div id="wrap">
+        <iframe id="frame" title="Truyện"
+                sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+        <p id="empty">Dán link một chương truyện vào ô phía trên để bắt đầu đọc. Kéo góc dưới phải để đổi cỡ khung.</p>
+      </div>
+    </div>
+
+    <details id="hidden-panel">
+      <summary>Phần tử đã ẩn trên <span id="host">trang này</span></summary>
+      <textarea id="hidden" spellcheck="false" aria-label="CSS selector của phần tử bị ẩn"></textarea>
+      <p>Mỗi dòng một CSS selector. Xoá dòng để hiện lại phần tử đó.</p>
+    </details>
+  </main>
+</body>
+</html>

@@ -1,0 +1,91 @@
+[
+  {
+    "id": 1,
+    "priority": 2,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/surrogates/adsbygoogle.js"
+      }
+    },
+    "condition": {
+      "urlFilter": "||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
+      "resourceTypes": [
+        "script"
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "priority": 2,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/bounce.html"
+      }
+    },
+    "condition": {
+      "resourceTypes": [
+        "sub_frame"
+      ],
+      "requestDomains": [
+        "shopee.vn",
+        "shope.ee",
+        "shp.ee",
+        "lazada.vn",
+        "lzd.co",
+        "tiki.vn",
+        "ti.ki",
+        "go.isclix.com",
+        "ecomobi.com",
+        "click.accesstrade.vn"
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "requestDomains": [
+        "doubleclick.net",
+        "googlesyndication.com",
+        "googleadservices.com",
+        "adservice.google.com",
+        "googletagservices.com",
+        "amazon-adsystem.com",
+        "adnxs.com",
+        "criteo.com",
+        "criteo.net",
+        "taboola.com",
+        "outbrain.com",
+        "mgid.com",
+        "revcontent.com",
+        "pubmatic.com",
+        "rubiconproject.com",
+        "openx.net",
+        "smartadserver.com",
+        "adskeeper.com",
+        "popads.net",
+        "popcash.net",
+        "propellerads.com",
+        "onclickads.net",
+        "adsterra.com",
+        "highperformanceformat.com",
+        "exoclick.com",
+        "exosrv.com",
+        "juicyads.com",
+        "hilltopads.net",
+        "clickadu.com",
+        "a-ads.com",
+        "adcash.com",
+        "trafficjunky.net",
+        "admicro.vn",
+        "eclick.vn",
+        "adtima.vn"
+      ]
+    }
+  }
+]

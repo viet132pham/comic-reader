@@ -1,0 +1,11 @@
+{
+  "name": "comic-reader",
+  "private": true,
+  "scripts": {
+    "test": "node --test test/scroll.test.cjs",
+    "e2e": "node test/e2e.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}

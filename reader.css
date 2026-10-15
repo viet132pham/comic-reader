@@ -1,0 +1,210 @@
+:root {
+  color-scheme: light dark;
+  --bg: #e4e6ea;
+  --panel: #f7f7f8;
+  --ink: #1d2026;
+  --muted: #5c6370;
+  --line: #c4c9d1;
+  --accent: #e3a81c;
+  --on-accent: #1d2026;
+  font: 14px/1.4 system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1d2026;
+    --panel: #282c33;
+    --ink: #e6e3dc;
+    --muted: #9aa0aa;
+    --line: #3b414b;
+    --accent: #f2c14e;
+  }
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+button {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+button:hover { border-color: var(--muted); }
+button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+
+input[type="checkbox"], input[type="range"] { accent-color: var(--accent); }
+
+/* ---- toolbar ---- */
+
+#bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+  padding: 10px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+
+#bar .go { display: flex; gap: 8px; flex: 1 1 360px; min-width: 0; }
+
+#url {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 10px;
+  font: inherit;
+  color: inherit;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+#open { background: var(--ink); border-color: var(--ink); color: var(--panel); }
+
+#bar label { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
+
+#note {
+  margin: 0;
+  padding: 8px 16px;
+  background: color-mix(in srgb, var(--accent) 22%, var(--panel));
+  border-bottom: 1px solid var(--line);
+}
+#note a { color: inherit; font-weight: 600; }
+
+/* ---- reading stage ---- */
+
+#stage { display: flex; justify-content: center; gap: 6px; padding: 16px; }
+
+#wrap {
+  position: relative;
+  resize: both;
+  overflow: hidden;
+  width: 480px;
+  height: 820px;
+  min-width: 280px;
+  min-height: 240px;
+  max-width: calc(100vw - 32px - 34px);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+#frame { display: block; width: 100%; height: 100%; border: 0; background: #fff; }
+#frame:not([src]) { visibility: hidden; }
+
+#empty {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  height: fit-content;
+  max-width: 30ch;
+  padding: 24px;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* The rail: auto-scroll toggle and live speed gauge in one.
+   Rows mirror DEAD = 0.25 in reader.js: 37.5% up zone, 25% rest, 37.5% down zone. */
+#rail {
+  width: 28px;
+  padding: 0;
+  display: grid;
+  grid-template-rows: 3fr 2fr 3fr;
+  overflow: hidden;
+  background: var(--panel);
+}
+#rail[aria-pressed="true"] { background: var(--panel); border-color: var(--accent); }
+
+#rail .zone { position: relative; }
+#rail[aria-pressed="true"] .zone { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+
+/* Speed lines: horizontal hatching that grows out of the rest band as speed rises. */
+#rail .zone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, var(--accent) 0 2px, transparent 2px 5px);
+  transition: transform 90ms linear;
+}
+#rail .up::after { transform-origin: bottom; transform: scaleY(var(--up, 0)); }
+#rail .down::after { transform-origin: top; transform: scaleY(var(--down, 0)); }
+
+#rail .label {
+  writing-mode: vertical-rl;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  color: var(--muted);
+  border-block: 1px solid var(--line);
+}
+#rail[aria-pressed="true"] .label { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+
+/* ---- hidden-elements editor ---- */
+
+#hidden-panel { width: min(100% - 32px, 640px); margin: 0 auto 24px; color: var(--muted); }
+#hidden-panel summary { cursor: pointer; padding: 4px 0; }
+#hidden-panel p { margin: 4px 0 0; font-size: 12px; }
+#hidden {
+  display: block;
+  width: 100%;
+  min-height: 96px;
+  margin-top: 8px;
+  padding: 8px;
+  font: 12px/1.5 ui-monospace, monospace;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  resize: vertical;
+}
+
+/* ---- floating panel (overlay.js) and picture-in-picture: the outer box sets the size ---- */
+
+body.embed {
+  height: 100vh;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-size: 12px;
+}
+body.embed #bar { padding: 6px 8px; gap: 6px 12px; }
+body.embed #bar .go { flex-basis: 100%; }
+body.embed #bar button { padding: 3px 8px; }
+body.embed #url { padding: 4px 8px; }
+body.embed #speed { width: 72px; }
+body.embed #note { padding: 6px 8px; }
+body.embed #home { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+body.embed #stage { flex: 1; min-height: 0; padding: 0; gap: 0; }
+body.embed #hidden-panel { width: auto; margin: 0; padding: 2px 8px; border-top: 1px solid var(--line); }
+body.embed #hidden { min-height: 56px; }
+
+body.pip #stage { height: 100vh; padding: 0; gap: 0; }
+body.pip #rail, body.embed #rail { border-radius: 0; border-width: 0 1px 0 0; }
+/* !important beats the inline size that native resize: both writes */
+body.pip #wrap, body.embed #wrap {
+  flex: 1;
+  width: auto !important;
+  height: auto !important;
+  max-width: none;
+  resize: none;
+  border: 0;
+  border-radius: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #rail .zone::after { transition: none; }
+}
